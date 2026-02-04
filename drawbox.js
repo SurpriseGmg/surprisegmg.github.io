@@ -13,7 +13,7 @@
 */
 const GOOGLE_FORM_ID = "1FAIpQLSf66RNCLOTJZlmecw83dR7VslpjSlt_Vw3H6j464XDY010gpg";
 const ENTRY_ID = "entry.641465234";
-const GOOGLE_SHEET_ID = "2PACX-1vRWrX1Ht5gHb8U1Wivhy2-BG5znlzr6vMLHpKihsqmZA2q-6SIw56MsEzbzmsrPG9bec4haC-Rk5004";
+//const GOOGLE_SHEET_ID = "2PACX-1vRWrX1Ht5gHb8U1Wivhy2-BG5znlzr6vMLHpKihsqmZA2q-6SIw56MsEzbzmsrPG9bec4haC-Rk5004";
 const DISPLAY_IMAGES = true;
 
 /*
@@ -23,7 +23,8 @@ const DISPLAY_IMAGES = true;
 */
 
 const CLIENT_ID = "b4fb95e0edc434c";
-const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/" + GOOGLE_SHEET_ID + "/export?format=csv";
+//const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/" + GOOGLE_SHEET_ID + "/export?format=csv";
+const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRWrX1Ht5gHb8U1Wivhy2-BG5znlzr6vMLHpKihsqmZA2q-6SIw56MsEzbzmsrPG9bec4haC-Rk5004/pub?gid=1259551144&single=true&output=csv";
 const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/" + GOOGLE_FORM_ID + "/formResponse";
 
 let canvas = document.getElementById("drawboxcanvas");
@@ -158,39 +159,41 @@ document.getElementById("submit").addEventListener("click", async function () {
 });
 
 async function fetchImages() {
-  if (!DISPLAY_IMAGES) {
-    console.log("Image display is disabled.");
-    return;
-  }
+  if (!DISPLAY_IMAGES) return;
 
   try {
-    const response = await fetch(GOOGLE_SHEET_URL);
+    // Adding the timestamp (?t=...) forces the browser to get fresh data from Google
+    const response = await fetch(GOOGLE_SHEET_URL + "&t=" + Date.now());
     const csvText = await response.text();
-    const rows = csvText.split("\n").slice(1);
+    
+    // Splits by line, removes the header row, and filters out empty lines
+    const rows = csvText.split(/\r?\n/).slice(1).filter(row => row.trim() !== "");
 
     const gallery = document.getElementById("gallery");
+    if (!gallery) return;
     gallery.innerHTML = "";
+    
+    // reverse() puts the newest drawings at the top
     rows.reverse().forEach((row) => {
-      const columns = row.split(",");
+      // This splits by comma but handles cases where Google adds quotes
+      const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
       if (columns.length < 2) return;
 
-      const timestamp = columns[0].trim();
-      const imgUrl = columns[1].trim().replace(/"/g, "");
+      const timestamp = columns[0].replace(/["']/g, "").trim();
+      const imgUrl = columns[1].replace(/["']/g, "").trim();
 
       if (imgUrl.startsWith("http")) {
         const div = document.createElement("div");
         div.classList.add("image-container");
-
         div.innerHTML = `
-                    <img src="${imgUrl}" alt="drawing">
-                    <p>${timestamp}</p>
-                `;
+            <img src="${imgUrl}" alt="drawing">
+            <p>${timestamp}</p>
+        `;
         gallery.appendChild(div);
       }
     });
   } catch (error) {
-    console.error("Error fetching images:", error);
-    document.getElementById("gallery").textContent = "Failed to load images.";
+    console.error("Gallery Error:", error);
   }
 }
 
