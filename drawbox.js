@@ -11,9 +11,9 @@
 				     `\\´´\¸.·´
         
 */
-const GOOGLE_FORM_ID = "1FAIpQLSfgbi0fsO4Tm-rBBiFgVntJYYfCwnuScj1PkpXTFyXzziMSMA";
-const ENTRY_ID = "entry.565585948";
-const GOOGLE_SHEET_ID = "1l7BF0YnarNrgw9tQv9_b8UKkvUKFipDqd2_XvwzbNSQ";
+const GOOGLE_FORM_ID = "1FAIpQLSf66RNCLOTJZlmecw83dR7VslpjSlt_Vw3H6j464XDY010gpg";
+const ENTRY_ID = "entry.641465234";
+const GOOGLE_SHEET_ID = "1-IzrPWpZK1hs5gtGeJqX5X-ny7iQDs_iNJ4haUboE9E";
 const DISPLAY_IMAGES = true;
 
 /*
