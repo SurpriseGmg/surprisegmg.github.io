@@ -1,10 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+	
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/drawbox.css">
+    <link rel="stylesheet" href="/drawbox2.css">
     <title>DRAWBOX</title>
     <style>
         * {box-sizing: border-box;}
@@ -32,7 +36,9 @@
     </style>
 </head>
 <body>
-    <h1>DRAWBOX</h1>
+	<a href="https://surprisegmg.neocities.org/" style="color: white;">
+		<i class="fa-solid fa-left-long"></i> Go back?</a>
+    <h1 style="text-align: center;">DRAWBOX</h1>
     <canvas id="drawboxcanvas" width="500" height="500"></canvas>
     <br>
     <div onclick="change_color(this)" style="background:red" class="stroke-color"></div>
@@ -47,8 +53,9 @@
     <button id="submit">Submit drawing</button>
     <p id="status"></p>
 
+    <p>Submit your drawings here! (If on mobile, for best results open site in desktop mode)</p>
 	
-    <h1>Submitted Drawings ☻</h1>
+    <h1 style="text-align: center;">Submitted Drawings ☻</h1>
     <div id="gallery">Loading images...</div>
     
     
